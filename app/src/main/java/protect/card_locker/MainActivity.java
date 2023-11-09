@@ -56,7 +56,8 @@ public class MainActivity extends CatimaAppCompatActivity implements LoyaltyCard
     private SQLiteDatabase mDatabase;
     private LoyaltyCardCursorAdapter mAdapter;
     private ActionMode mCurrentActionMode;
-    private SearchView mSearchView;
+//     No search service for Wear OS
+//    private SearchView mSearchView;
     private int mLoyaltyCardCount = 0;
     protected String mFilter = "";
     protected Object mGroup = null;
@@ -306,11 +307,14 @@ public class MainActivity extends CatimaAppCompatActivity implements LoyaltyCard
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (mSearchView != null && !mSearchView.isIconified()) {
+// No search service for Wear OS
+/*                if (mSearchView != null && !mSearchView.isIconified()) {
                     mSearchView.setIconified(true);
                 } else {
                     finish();
                 }
+*/
+                finish();
             }
         });
     }
@@ -324,10 +328,11 @@ public class MainActivity extends CatimaAppCompatActivity implements LoyaltyCard
             mCurrentActionMode.finish();
         }
 
-        if (mSearchView != null && !mSearchView.isIconified()) {
+// No search service for Wear OS
+/*        if (mSearchView != null && !mSearchView.isIconified()) {
             mFilter = mSearchView.getQuery().toString();
         }
-
+*/
         // Start of active tab logic
         updateTabGroups(groupsTabLayout);
 
@@ -388,7 +393,9 @@ public class MainActivity extends CatimaAppCompatActivity implements LoyaltyCard
     }
 
     private void displayCardSetupOptions(Menu menu, boolean shouldShow) {
-        for (int id : new int[]{R.id.action_search, R.id.action_display_options, R.id.action_sort}) {
+// No search service for Wear OS
+//        for (int id : new int[]{R.id.action_search, R.id.action_display_options, R.id.action_sort}) {
+        for (int id : new int[]{R.id.action_display_options, R.id.action_sort}) {
             menu.findItem(id).setVisible(shouldShow);
         }
     }
@@ -543,7 +550,8 @@ public class MainActivity extends CatimaAppCompatActivity implements LoyaltyCard
 
         displayCardSetupOptions(inputMenu, mLoyaltyCardCount > 0);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+// No search service for Wear OS
+/*        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {
             mSearchView = (SearchView) inputMenu.findItem(R.id.action_search).getActionView();
             mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -573,7 +581,7 @@ public class MainActivity extends CatimaAppCompatActivity implements LoyaltyCard
                 }
             });
         }
-
+*/
         return super.onCreateOptionsMenu(inputMenu);
     }
 
